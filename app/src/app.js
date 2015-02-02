@@ -10,11 +10,11 @@ let App = React.createClass({
 	},
 	getInitialState: function () {
 		return {
-			value: 1.00,
+			amount: '10.00',
 		};
 	},
 	componentWillMount: function () {
-		let currencies = this.props.currencies;
+		let currencies = this.props.converter.currencies;
 		let menuItems = Object.keys(currencies).map(currency => ({
 			payload: currency,
 			text: `${currencies[currency]} (${currency})`
@@ -26,6 +26,11 @@ let App = React.createClass({
 			toIndex: Object.keys(currencies).indexOf(this.props.toCurrency)
 		});
 	},
+	handleAmountChange: function (e) {
+		this.setState({
+			amount: e.target.value
+		});
+	},
 	handleSwap: function () {
 		this.setState({
 			fromIndex: this.state.toIndex,
@@ -33,23 +38,33 @@ let App = React.createClass({
 		});
 	},
 	handleFromChange: function (e, selectedIndex) {
-		console.log('handleFromChange', arguments);
 		this.setState({
 			fromIndex: selectedIndex
 		});
 	},
 	handleToChange: function (e, selectedIndex) {
-		console.log('handleToChange', arguments);
 		this.setState({
 			toIndex: selectedIndex
 		});
 	},
 	render: function () {
+		let amount = this.state.amount;
+		let from = this.state.menuItems[this.state.fromIndex].payload;
+		let to = this.state.menuItems[this.state.toIndex].payload;
+		let conversion = '?';
+
+		try {
+			conversion = this.props.converter.convert(+amount, from, to);
+		} catch (ex) {
+			console.error(ex);
+		}
+
 		return (
 			<div>
 				<TextField
 					hintText="amount"
-					value={this.state.value} />
+					value={this.state.amount}
+					onChange={this.handleAmountChange} />
 				<DropDownMenu
 					menuItems={this.state.menuItems}
 					selectedIndex={this.state.fromIndex}
@@ -61,6 +76,7 @@ let App = React.createClass({
 					menuItems={this.state.menuItems}
 					selectedIndex={this.state.toIndex}
 					onChange={this.handleToChange} />
+				<p>{amount} {from} = {conversion} {to}</p>
 			</div>
 		);
 	}

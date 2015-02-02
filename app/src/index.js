@@ -11,7 +11,7 @@ injectTapEventPlugin();
 Converter.initialize().then(() => {
 
 	React.render(
-		<App currencies={Converter.currencies} />,
+		<App converter={Converter} />,
 		document.body
 	);
 

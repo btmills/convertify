@@ -1,5 +1,6 @@
 import 'whatwg-fetch';
 import money from 'money';
+import accounting from 'accounting';
 
 const LATEST = 'https://dl.dropboxusercontent.com/u/5991328/convertify/latest.json';
 const CURRENCIES = 'https://dl.dropboxusercontent.com/u/5991328/convertify/currencies.json';
@@ -22,7 +23,10 @@ export default class Converter {
 	}
 
 	static convert(value, from, to) {
-		return money.convert(value, { from, to });
+		return accounting.formatMoney(
+			money.convert(value, { from, to }),
+			{ format: '%v' }
+		);
 	}
 
 	static get currencies() {
