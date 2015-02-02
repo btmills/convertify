@@ -1,4 +1,9 @@
-Ensure you have Android Studio and Node.js installed.
+Ensure you have Android Studio, ant, and Node.js installed.
+
+```sh
+$ brew install node ant
+$ brew cask install android-studio
+```
 
 Add these to your `~/.bashrc` or `~/.zshrc`:
 
