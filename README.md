@@ -12,7 +12,7 @@ $ npm i -g cordova gulp
 
 $ git clone https://github.com/btmills/convertify.git
 
-$ cd convertify/www
+$ cd convertify/app
 
 $ npm i
 
